@@ -1,3 +1,7 @@
+param (
+    [string]$csvfile, # = "C:\Users\Mark\OneDrive - Cincinnati Bell Telephone Company, LLC\repos\Azure-Tagging-Powershell\inputRG.csv",
+    [string]$folder # = "C:\Users\Mark\OneDrive - Cincinnati Bell Telephone Company, LLC\PowerShell Script Outputs\" 
+)
 # Description:
 #   Update the tags on a list of resources
 # USE:
@@ -14,6 +18,14 @@ if ($args.length -ne 3) {
   write-host ".\resourceTagUpdate.ps1 <csvfile> <tag> <value>"
 }
 
+$dbg = 1
+
+function mydbg ($msg) {
+  if ($dbg -eq 1) {
+    Write-Host "Dbg - $msg"
+  }
+}
+
 # Read input file.  Expected format
 # ResourceGroup, ResourceName
 $userdata = Import-CSV $args[0] 
@@ -25,8 +37,8 @@ $CurrentRow = 1
 
 ForEach($row in $userdata){ 
     [string]::Format("[Row {0} of {1}] RG={2}, Name={3}",([string] $CurrentRow),([string] $TotalRows),([string] $row.ResourceGroup),([string] $row.Name) )
-    #write-host $row.id
     $CurrentRow++
-    Update-AzTag -ResourceId ([string] $row.id) -Tag $tags -Operation Merge 
+    mydbg (" row.id = ( " + $row.id + " )   tags = ( " + $tags + " )")
+    # Update-AzTag -ResourceId ([string] $row.id) -Tag $tags -Operation Merge 
 } 
 
