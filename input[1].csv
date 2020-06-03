@@ -1,0 +1,4 @@
+RESOURCEGROUP,NAME,TAGS
+rgjustenergytest,Failure Anomalies - AppInsight-JustEnergy,{}
+rgjustenergytest,Application Insights Smart Detection,
+rgjustenergytest,AppInsight-JustEnergy,"{""ManagedBy"":""CBTS""}"
