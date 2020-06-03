@@ -1,6 +1,6 @@
 param (
-    [string]$csvfile, # = "C:\Users\Mark\OneDrive - Cincinnati Bell Telephone Company, LLC\repos\Azure-Tagging-Powershell\inputRG.csv",
-    [string]$folder # = "C:\Users\Mark\OneDrive - Cincinnati Bell Telephone Company, LLC\PowerShell Script Outputs\" 
+    [string]$csvfile = "C:\Users\Mark\OneDrive - Cincinnati Bell Telephone Company, LLC\repos\Azure-Tagging-Powershell\inputRG.csv",
+    [string]$folder = "C:\Users\Mark\OneDrive - Cincinnati Bell Telephone Company, LLC\PowerShell Script Outputs\" 
 )
 # Description:
 #   Update the tags on a list of resources
@@ -26,9 +26,22 @@ function mydbg ($msg) {
   }
 }
 
+#################################################################################
+# Load a csv file to get your list of "MANAGED" Resource Groups 
+# to process for resources
+# Managed Resource Groups contain "ManagedBy:Onx/CBTS" tag on the Resource Group
+#################################################################################
+function loadManagedResourceGroups{
+  $combined_resources = Get-Content -Path $csvfile  | ConvertFrom-Csv 
+  
+  return $combined_resources
+  
+  }
+  
+  
 # Read input file.  Expected format
 # ResourceGroup, ResourceName
-$userdata = Import-CSV $args[0] 
+$userdata = loadManagedResourceGroups
 $tags = @{}
 $tags.add($args[1],$args[2]) # {"ManagedBy"="Onx/CBTS"} 
 
