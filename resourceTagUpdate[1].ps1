@@ -18,7 +18,7 @@ if ($args.length -ne 3) {
 # ResourceGroup, ResourceName
 $userdata = Import-CSV $args[0] 
 $tags = @{}
-$tags.add($args[1],$args[2]) # {"ManagedBy"="CBTS"} 
+$tags.add($args[1],$args[2]) # {"ManagedBy"="Onx/CBTS"} 
 
 $TotalRows = $userdata.Count
 $CurrentRow = 1
